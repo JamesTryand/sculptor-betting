@@ -1,4 +1,8 @@
 Sample betting application. Illustrating pub/sub, CQRS style.
 
-Run with 'mvn install jetty:run'.
-Browse to http://localhost:8888/
+== How to run ==
+1. Install and start MongoDB (1.4.5): http://www.mongodb.org/downloads
+2. Install and start ActiveMQ: http://activemq.apache.org/download.html 
+3. mvn install
+4. mvn jetty:run
+5. Browse to http://localhost:8888/
