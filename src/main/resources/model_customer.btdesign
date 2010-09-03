@@ -1,0 +1,41 @@
+ApplicationPart BettingCustomer {
+   
+   Module customer {
+   
+   	 Consumer BettingConsumer {
+   	 	inject @CustomerBetRepository
+   	 	inject @CustomerRepository
+   	 	subscribe to jms:topic:bet
+   	 }
+   	 
+   	 Service BettingQueryService {
+   	 	getHighStakes => CustomerBetRepository.findHighStakesCustomers; 
+   	 }
+   
+   	 Entity CustomerBet {
+   	 	String customerId key
+   	 	String customerName nullable required
+   	 	Double totalAmount index required
+   	 	
+   	 	Repository CustomerBetRepository { 
+   	 		findByKey;
+   	 		save;
+   	 		List<@CustomerBet> findHighStakesCustomers(Double limit);
+   	 		protected findByCondition;
+   	 	}
+   	 }
+   	 
+   	 Entity Customer {
+   	 	String customerId key
+   	 	String customerName
+   	 	
+   	 	Repository CustomerRepository {
+   	 		findByKey;
+   	 	}
+   	 	
+   	 }
+   	 
+
+   }
+
+}

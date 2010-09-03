@@ -1,0 +1,4 @@
+Sample betting application. Illustrating pub/sub, CQRS style.
+
+Run with 'mvn install jetty:run'.
+Browse to http://localhost:8888/

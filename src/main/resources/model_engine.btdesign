@@ -1,0 +1,31 @@
+ApplicationPart BettingEngine {
+
+	Module engine {
+	
+    	ValueObject Bet {
+    		String betOfferId
+    		String customerId
+    		Double amount
+    		
+    		Repository BetRepository {
+    			save;
+    		}
+    	}
+    	Service BettingEngine {
+    		inject @BetRepository
+    		inject @BettingPublisher
+    		
+    		placeBet(@Bet bet);
+    	}
+
+    	DomainEvent BetPlaced {
+			- Bet bet
+    	}
+    	
+    	Service BettingPublisher {
+    		publishEvent(@BetPlaced betEvent) publish to jms:topic:bet; 
+    	} 
+   }
+   
+
+}

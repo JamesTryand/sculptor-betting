@@ -1,0 +1,7 @@
+import "classpath:/model_engine.btdesign"
+import "classpath:/model_customer.btdesign"
+
+Application Betting {
+    basePackage=org.betting
+
+}
