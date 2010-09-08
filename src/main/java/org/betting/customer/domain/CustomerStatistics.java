@@ -24,8 +24,6 @@ public class CustomerStatistics extends CustomerStatisticsBase {
         int n = getNumberOfBets();
         double newAverage = ((getAverageAmount() * n) + bet.getAmount()) / (n + 1);
         setAverageAmount(newAverage);
-
         setNumberOfBets(n + 1);
-
     }
 }
