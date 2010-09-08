@@ -3,24 +3,26 @@ ApplicationPart BettingCustomer {
    Module customer {
    
    	 Consumer BettingConsumer {
-   	 	inject @CustomerBetRepository
+   	 	inject @CustomerStatisticsRepository
    	 	inject @CustomerRepository
    	 	subscribe to jms:topic:bet
    	 }
    	 
    	 Service BettingQueryService {
-   	 	getHighStakes => CustomerBetRepository.findHighStakesCustomers; 
+   	 	getHighBetters => CustomerStatisticsRepository.findHighAverageCustomers; 
    	 }
    
-   	 Entity CustomerBet {
+   	 Entity CustomerStatistics {
+   	 	gap
    	 	String customerId key
    	 	String customerName nullable required
-   	 	Double totalAmount index required
+   	 	int numberOfBets
+   	 	double averageAmount index
    	 	
-   	 	Repository CustomerBetRepository { 
+   	 	Repository CustomerStatisticsRepository { 
    	 		findByKey;
    	 		save;
-   	 		List<@CustomerBet> findHighStakesCustomers(Double limit);
+   	 		List<@CustomerStatistics> findHighAverageCustomers(double limit);
    	 		protected findByCondition;
    	 	}
    	 }

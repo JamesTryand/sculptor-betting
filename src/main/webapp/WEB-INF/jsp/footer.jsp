@@ -3,7 +3,7 @@
 	    <tr>
 	      <td><a href="<c:url value="/" />">Home</a></td>
 	      <td><a href="<c:url value="/rest/bet/form.html" />">Place Bet</a></td>
-	      <td><a href="<c:url value="/rest/customerbet?limit=100" />">High Stakes</a></td>
+	      <td><a href="<c:url value="/rest/customerstat?limit=100" />">High Betters</a></td>
 	    </tr>
 	  </table>
 	  <table class="footer">

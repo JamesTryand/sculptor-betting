@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import org.betting.customer.domain.CustomerBet;
+import org.betting.customer.domain.CustomerStatistics;
 import org.betting.engine.domain.Bet;
 import org.betting.engine.eventapi.BetPlaced;
 import org.fornax.cartridges.sculptor.framework.accessimpl.mongodb.DbManager;
@@ -56,20 +56,26 @@ public class BettingQueryServiceTest extends AbstractDependencyInjectionSpringCo
         // dbManager.getDB().dropDatabase();
     }
 
+    @Override
     @Test
-    public void testGetHighStakes() throws Exception {
-        Bet bet1 = new Bet("abc", "1234", 100.0);
+    public void testGetHighBetters() throws Exception {
+        Bet bet1 = new Bet("abc", "1234", 95.0);
         BetPlaced event1 = new BetPlaced(new Date(), bet1);
         eventBus.publish("jms:topic:bet", event1);
-        Bet bet2 = new Bet("def", "1234", 30.0);
+        Bet bet2 = new Bet("def", "1234", 105.0);
         BetPlaced event2 = new BetPlaced(new Date(), bet2);
         eventBus.publish("jms:topic:bet", event2);
+        Bet bet3 = new Bet("abc", "9876", 30.0);
+        BetPlaced event3 = new BetPlaced(new Date(), bet3);
+        eventBus.publish("jms:topic:bet", event3);
 
         Thread.sleep(200);
 
-        List<CustomerBet> highStakes = bettingQueryService.getHighStakes(90.0);
-        assertEquals(1, highStakes.size());
-        assertEquals("1234", highStakes.get(0).getCustomerId());
-        assertEquals(130, highStakes.get(0).getTotalAmount(), 0.01);
+        List<CustomerStatistics> high = bettingQueryService.getHighBetters(99.0);
+        assertEquals(1, high.size());
+        assertEquals("1234", high.get(0).getCustomerId());
+        assertEquals(100, high.get(0).getAverageAmount(), 0.01);
+        assertEquals(2, high.get(0).getNumberOfBets());
+
     }
 }

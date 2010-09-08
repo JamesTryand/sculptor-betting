@@ -3,9 +3,9 @@ package org.betting.customer.consumer;
 import static org.fornax.cartridges.sculptor.framework.event.DynamicMethodDispatcher.dispatch;
 
 import org.betting.customer.domain.Customer;
-import org.betting.customer.domain.CustomerBet;
-import org.betting.customer.exception.CustomerBetNotFoundException;
+import org.betting.customer.domain.CustomerStatistics;
 import org.betting.customer.exception.CustomerNotFoundException;
+import org.betting.customer.exception.CustomerStatisticsNotFoundException;
 import org.betting.engine.domain.Bet;
 import org.betting.engine.eventapi.BetPlaced;
 import org.fornax.cartridges.sculptor.framework.event.Event;
@@ -30,17 +30,18 @@ public class BettingConsumerImpl extends BettingConsumerImplBase {
 
         String customerName = tryGetCustomerName(customerId);
 
-        CustomerBet customerBet;
+        CustomerStatistics stat;
         try {
-            customerBet = getCustomerBetRepository().findByKey(customerId);
-            customerBet.setCustomerName(customerName);
-            customerBet.setTotalAmount(customerBet.getTotalAmount() + bet.getAmount());
-        } catch (CustomerBetNotFoundException e) {
+            stat = getCustomerStatisticsRepository().findByKey(customerId);
+            stat.setCustomerName(customerName);
+        } catch (CustomerStatisticsNotFoundException e) {
             // first bet for this customer
-            customerBet = new CustomerBet(customerId, customerName, bet.getAmount());
+            stat = new CustomerStatistics(customerId, customerName);
         }
 
-        getCustomerBetRepository().save(customerBet);
+        stat.addBet(bet);
+
+        getCustomerStatisticsRepository().save(stat);
     }
 
     private String tryGetCustomerName(String customerId) {
