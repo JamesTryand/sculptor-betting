@@ -1,43 +1,40 @@
 ApplicationPart BettingCustomer {
    
    Module customer {
+        Consumer BettingConsumer {
+            inject @CustomerStatisticsRepository
+            inject @CustomerRepository
+            subscribe to jms:topic:bet
+        }
+        
+        Service BettingQueryService {
+            getHighBetters => CustomerStatisticsRepository.findHighAverageCustomers; 
+        }
    
-   	 Consumer BettingConsumer {
-   	 	inject @CustomerStatisticsRepository
-   	 	inject @CustomerRepository
-   	 	subscribe to jms:topic:bet
-   	 }
-   	 
-   	 Service BettingQueryService {
-   	 	getHighBetters => CustomerStatisticsRepository.findHighAverageCustomers; 
-   	 }
-   
-   	 Entity CustomerStatistics {
-   	 	gap
-   	 	String customerId key
-   	 	String customerName nullable required
-   	 	int numberOfBets
-   	 	double averageAmount index
-   	 	
-   	 	Repository CustomerStatisticsRepository { 
-   	 		findByKey;
-   	 		save;
-   	 		List<@CustomerStatistics> findHighAverageCustomers(double limit);
-   	 		protected findByCondition;
-   	 	}
-   	 }
-   	 
-   	 Entity Customer {
-   	 	String customerId key
-   	 	String customerName
-   	 	
-   	 	Repository CustomerRepository {
-   	 		findByKey;
-   	 	}
-   	 	
-   	 }
-   	 
-
+        Entity CustomerStatistics {
+            gap
+            String customerId key
+            String customerName nullable required
+            int numberOfBets
+            double averageAmount index
+            
+            Repository CustomerStatisticsRepository { 
+                findByKey;
+                save;
+                List<@CustomerStatistics> findHighAverageCustomers(double limit);
+                protected findByCondition;
+            }
+        }
+        
+        Entity Customer {
+            String customerId key
+            String customerName
+            
+            Repository CustomerRepository {
+                findByKey;
+            }
+            
+        }
    }
 
 }

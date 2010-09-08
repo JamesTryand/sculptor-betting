@@ -25,8 +25,6 @@ public class CustomerStatisticsRepositoryImpl extends CustomerStatisticsReposito
             .greaterThan(limit)
             .orderBy(customerId())
             .build();
-        List<CustomerStatistics> result = findByCondition(criteria);
-        return result;
-
+        return findByCondition(criteria);
     }
 }
