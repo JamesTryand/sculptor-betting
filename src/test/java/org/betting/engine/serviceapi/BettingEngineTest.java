@@ -1,5 +1,7 @@
 package org.betting.engine.serviceapi;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Set;
 
 import org.betting.engine.domain.Bet;
@@ -10,15 +12,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
  * Spring based test with MongoDB.
  */
 @RunWith(org.springframework.test.context.junit4.SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext-test.xml" })
-public class BettingEngineTest extends AbstractDependencyInjectionSpringContextTests implements BettingEngineTestBase {
+public class BettingEngineTest extends AbstractJUnit4SpringContextTests implements BettingEngineTestBase {
     @Autowired
     private DbManager dbManager;
     @Autowired
@@ -50,6 +52,7 @@ public class BettingEngineTest extends AbstractDependencyInjectionSpringContextT
         return (int) dbManager.getDBCollection(name).getCount();
     }
 
+    @Override
     @Test
     public void testPlaceBet() throws Exception {
         Bet bet = new Bet("abc", "1111", 10.0);

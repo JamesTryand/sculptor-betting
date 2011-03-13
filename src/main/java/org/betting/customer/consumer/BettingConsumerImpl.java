@@ -7,7 +7,7 @@ import org.betting.customer.domain.CustomerStatistics;
 import org.betting.customer.exception.CustomerNotFoundException;
 import org.betting.customer.exception.CustomerStatisticsNotFoundException;
 import org.betting.engine.domain.Bet;
-import org.betting.engine.eventapi.BetPlaced;
+import org.betting.engine.domain.BetPlaced;
 import org.fornax.cartridges.sculptor.framework.event.Event;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +19,7 @@ public class BettingConsumerImpl extends BettingConsumerImplBase {
     public BettingConsumerImpl() {
     }
 
+    @Override
     public void receive(Event event) {
         dispatch(this, event, "handle");
     }

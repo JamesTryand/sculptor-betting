@@ -1,12 +1,14 @@
 package org.betting.customer.serviceapi;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import org.betting.customer.domain.CustomerStatistics;
 import org.betting.engine.domain.Bet;
-import org.betting.engine.eventapi.BetPlaced;
+import org.betting.engine.domain.BetPlaced;
 import org.fornax.cartridges.sculptor.framework.accessimpl.mongodb.DbManager;
 import org.fornax.cartridges.sculptor.framework.event.EventBus;
 import org.junit.After;
@@ -15,16 +17,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
  * Spring based test with MongoDB.
  */
 @RunWith(org.springframework.test.context.junit4.SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext-test.xml" })
-public class BettingQueryServiceTest extends AbstractDependencyInjectionSpringContextTests implements
-        BettingQueryServiceTestBase {
+public class BettingQueryServiceTest extends AbstractJUnit4SpringContextTests implements BettingQueryServiceTestBase {
     @Autowired
     private DbManager dbManager;
     @Autowired

@@ -9,8 +9,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
  * Spring based test with MongoDB.
@@ -18,8 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 @RunWith(org.springframework.test.context.junit4.SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext-test.xml" })
 @Ignore
-public class BettingPublisherTest extends AbstractDependencyInjectionSpringContextTests implements
-        BettingPublisherTestBase {
+public class BettingPublisherTest extends AbstractJUnit4SpringContextTests implements BettingPublisherTestBase {
     @Autowired
     private DbManager dbManager;
     @Autowired
@@ -51,6 +50,7 @@ public class BettingPublisherTest extends AbstractDependencyInjectionSpringConte
         return (int) dbManager.getDBCollection(name).getCount();
     }
 
+    @Override
     @Test
     public void testPublishEvent() throws Exception {
         // TODO Auto-generated method stub
